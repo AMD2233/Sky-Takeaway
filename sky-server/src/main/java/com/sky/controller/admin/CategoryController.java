@@ -36,4 +36,26 @@ public class CategoryController {
        return Result.success(pageResult);
 
     }
+
+
+
+    @PostMapping("/status/{status}")
+    @ApiOperation("启用, 禁用分类")
+    public Result statusOrStop(@PathVariable Integer status, long id) {
+        categoryService.statusOrStop(status, id);
+        return Result.success();
+    }
+
+
+
+    @PutMapping
+    @ApiOperation("修改分类")
+    public Result update(@RequestBody CategoryDTO categoryDTO) {
+        categoryService.update(categoryDTO);
+        return Result.success();
+    }
+
+
+
+
 }

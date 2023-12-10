@@ -19,4 +19,9 @@ public interface CategoryMapper {
 
 
     Page<Category> select(CategoryPageQueryDTO categoryPageQueryDTO);
+
+
+
+
+    void update(Category category);
 }
