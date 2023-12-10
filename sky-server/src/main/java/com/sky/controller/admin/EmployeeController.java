@@ -125,6 +125,7 @@ public class EmployeeController {
     @ApiOperation("修改密码")
     public Result editPassword(@RequestBody PasswordEditDTO passwordEditDTO) {
         employeeService.editPassword(passwordEditDTO);
+
         return Result.success();
     }
 

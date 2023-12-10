@@ -14,6 +14,7 @@ import com.sky.dto.PasswordEditDTO;
 import com.sky.entity.Employee;
 import com.sky.exception.AccountLockedException;
 import com.sky.exception.AccountNotFoundException;
+import com.sky.exception.PasswordEditFailedException;
 import com.sky.exception.PasswordErrorException;
 import com.sky.mapper.EmployeeMapper;
 import com.sky.result.PageResult;
@@ -117,7 +118,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void editPassword(PasswordEditDTO passwordEditDTO) {
         String oldPassword = passwordEditDTO.getOldPassword();
+        oldPassword = DigestUtils.md5DigestAsHex(oldPassword.getBytes());
+        String newPassword = passwordEditDTO.getNewPassword();
+        newPassword = DigestUtils.md5DigestAsHex(newPassword.getBytes());
         Long empId = passwordEditDTO.getEmpId();
+        Employee byId = employeeMapper.getById(Math.toIntExact(empId));
+
+        if (!byId.getPassword().equals(oldPassword)) {
+            throw new PasswordEditFailedException(MessageConstant.PASSWORD_ERROR);
+        }
+
+        Employee employee = Employee.builder()
+                .password(newPassword)
+                .id(empId)
+                .build();
+
+        employeeMapper.update(employee);
     }
 
     @Override
@@ -134,6 +150,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employee.setUpdateTime(LocalDateTime.now());
         employee.setUpdateUser(BaseContext.getCurrentId());
+
 
         employeeMapper.update(employee);
     }
