@@ -55,6 +55,13 @@ public class CategoryController {
         return Result.success();
     }
 
+    @DeleteMapping
+    @ApiOperation("根据id删除分类")
+    public Result delete(Integer id) {
+        categoryService.delete(id);
+        return Result.success();
+    }
+
 
 
 
