@@ -2,6 +2,7 @@ package com.sky.controller.admin;
 
 import com.sky.dto.CategoryDTO;
 import com.sky.dto.CategoryPageQueryDTO;
+import com.sky.entity.Category;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.CategoryService;
@@ -9,6 +10,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -32,7 +35,7 @@ public class CategoryController {
     @GetMapping("/page")
     @ApiOperation("分类分页查询")
     public Result<PageResult> list(CategoryPageQueryDTO categoryPageQueryDTO) {
-       PageResult pageResult = categoryService.list(categoryPageQueryDTO);
+       PageResult pageResult = categoryService.page(categoryPageQueryDTO);
        return Result.success(pageResult);
 
     }
@@ -60,6 +63,14 @@ public class CategoryController {
     public Result delete(Integer id) {
         categoryService.delete(id);
         return Result.success();
+    }
+
+
+    @GetMapping("/list")
+    @ApiOperation("根据类型查询分类")
+    public Result<List<Category>> list(String type) {
+        List<Category> list = categoryService.list(type);
+        return Result.success(list);
     }
 
 

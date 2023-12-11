@@ -45,7 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public PageResult list(CategoryPageQueryDTO categoryPageQueryDTO) {
+    public PageResult page(CategoryPageQueryDTO categoryPageQueryDTO) {
         PageHelper.startPage(categoryPageQueryDTO.getPage(), categoryPageQueryDTO.getPageSize());
        Page<Category> page = categoryMapper.select(categoryPageQueryDTO);
 
@@ -91,5 +91,12 @@ public class CategoryServiceImpl implements CategoryService {
         categoryMapper.delete(id);
 
 
+    }
+
+
+    @Override
+    public List<Category> list(String type) {
+       List<Category> list = categoryMapper.list(type);
+       return list;
     }
 }
