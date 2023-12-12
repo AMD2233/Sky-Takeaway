@@ -63,4 +63,13 @@ where id = #{id}
 
 
 
+    <delete id="deleteList">
+        delete from sky_take_out.dish where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+
 </mapper>

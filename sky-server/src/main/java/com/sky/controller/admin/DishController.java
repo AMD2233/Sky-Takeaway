@@ -10,8 +10,11 @@ import com.sky.vo.DishVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -61,6 +64,17 @@ public class DishController {
     @PutMapping
     public Result update(@RequestBody DishDTO dishDTO) {
         dishService.update(dishDTO);
+
+        return Result.success();
+    }
+
+
+
+
+    @ApiOperation("批量删除菜品")
+    @DeleteMapping
+    public Result deleteList(@RequestParam List<Long> ids) {
+        dishService.deleteList(ids);
 
         return Result.success();
     }
