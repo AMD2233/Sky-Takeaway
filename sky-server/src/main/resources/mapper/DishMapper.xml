@@ -8,8 +8,8 @@
     </insert>
 
 
-    <select id="pageQuery" resultType="com.sky.entity.Dish">
-        select * from sky_take_out.dish
+    <select id="pageQuery" resultType="com.sky.vo.DishVO">
+        select d.*, c.name category_name from sky_take_out.dish d left join sky_take_out.category c on d.category_id = c.id
         <where>
             <if test="name != null">
                 name like concat('%', #{name}, '%')
