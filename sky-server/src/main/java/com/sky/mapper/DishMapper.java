@@ -21,6 +21,8 @@ public interface DishMapper {
     long insert(Dish dish);
 
     Page<Dish> pageQuery(DishPageQueryDTO dishPageQueryDTO);
+
+    void update(Dish dish);
 }
 
 

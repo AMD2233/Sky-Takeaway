@@ -35,4 +35,12 @@ public class DishController {
        PageResult pageResult = dishService.page(dishPageQueryDTO);
         return Result.success(pageResult);
     }
+
+
+    @ApiOperation("菜品起售, 停售")
+    @PostMapping("/status/{status}")
+    public Result statusOrStop(@PathVariable Integer status, Long id) {
+        dishService.statusOrStop(status, id);
+        return Result.success();
+    }
 }
