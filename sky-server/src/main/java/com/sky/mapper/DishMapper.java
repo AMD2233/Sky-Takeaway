@@ -6,6 +6,7 @@ import com.sky.annotation.AutoFill;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.enumeration.OperationType;
+import com.sky.vo.DishVO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -23,6 +24,9 @@ public interface DishMapper {
     Page<Dish> pageQuery(DishPageQueryDTO dishPageQueryDTO);
 
     void update(Dish dish);
+
+    @Select("select * from sky_take_out.dish where id = #{id}")
+    DishVO getById(Long id);
 }
 
 
