@@ -21,7 +21,7 @@
                 and status != #{status}
             </if>
         </where>
-        order by create_time
+        order by create_time desc
     </select>
 
     <update id="update">
