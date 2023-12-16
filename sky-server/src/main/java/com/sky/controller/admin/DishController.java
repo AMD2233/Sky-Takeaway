@@ -37,7 +37,7 @@ public class DishController {
     @ApiOperation("分页展示")
     @GetMapping("page")
     public Result<PageResult> page(DishPageQueryDTO dishPageQueryDTO) {
-       PageResult pageResult = dishService.page(dishPageQueryDTO);
+        PageResult pageResult = dishService.page(dishPageQueryDTO);
         return Result.success(pageResult);
     }
 
@@ -48,7 +48,6 @@ public class DishController {
         dishService.statusOrStop(status, id);
         return Result.success();
     }
-
 
 
     @ApiOperation("根据id查询菜品")
@@ -69,13 +68,27 @@ public class DishController {
     }
 
 
-
-
     @ApiOperation("批量删除菜品")
     @DeleteMapping
     public Result deleteList(@RequestParam List<Long> ids) {
         dishService.deleteList(ids);
 
         return Result.success();
+    }
+
+
+    @ApiOperation("根据分类id查询菜品")
+    @GetMapping("/list")
+    /*
+     Expected one result (or null) to be returned by selectOne(), but found: 3] with root cause
+    这句话代表两种情况：
+    1.你想查询一条数据，但返回两条数据：
+    2.你想查询多条数据，但是前台限制只能查询一条
+    so 要用List<Dish>
+     */
+    public Result<List<Dish>> list(Long categoryId) {
+
+        List<Dish> dishs = dishService.list(categoryId);
+        return Result.success(dishs);
     }
 }

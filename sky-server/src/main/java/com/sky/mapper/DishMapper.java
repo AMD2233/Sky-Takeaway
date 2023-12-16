@@ -34,6 +34,8 @@ public interface DishMapper {
 
 
 
+    @Select("select * from sky_take_out.dish where category_id = #{categoryId}")
+    List<Dish> list(Long categoryId);
 }
 
 
