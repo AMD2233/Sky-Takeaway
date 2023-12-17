@@ -26,5 +26,6 @@ public interface SetmealMapper {
     @Select("select * from sky_take_out.setmeal where id = #{id}")
     SetmealVO getById(Long id);
 
+    @AutoFill(OperationType.UPDATE)
     void update(Setmeal setmeal);
 }
