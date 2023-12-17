@@ -22,4 +22,9 @@ public interface SetmealMapper {
 
     @AutoFill(OperationType.INSERT)
     void save(Setmeal setmeal);
+
+    @Select("select * from sky_take_out.setmeal where id = #{id}")
+    SetmealVO getById(Long id);
+
+    void update(Setmeal setmeal);
 }
