@@ -92,4 +92,10 @@ public class SetmearlServiceImpl implements SetmealService {
                 }
         );
     }
+
+    @Override
+    public void statusOrStop(Integer status, Long id) {
+        setmealMapper.statusOrStop(status, id);
+
+    }
 }
