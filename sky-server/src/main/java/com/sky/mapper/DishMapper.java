@@ -36,6 +36,10 @@ public interface DishMapper {
 
     @Select("select * from sky_take_out.dish where category_id = #{categoryId}")
     List<Dish> list(Long categoryId);
+
+
+    @Select("select status from sky_take_out.dish where id = #{dishId}")
+    Integer query(Long dishId);
 }
 
 

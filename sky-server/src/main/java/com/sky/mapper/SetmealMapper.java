@@ -11,6 +11,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 @Mapper
 public interface SetmealMapper {
 
@@ -32,4 +34,8 @@ public interface SetmealMapper {
 
     @Update("update sky_take_out.setmeal set status = #{status} where id = #{id}")
     void statusOrStop(Integer status, Long id);
+
+    List<Integer> queryStatus(List<Long> ids);
+
+    void deleteList(List<Long> ids);
 }

@@ -10,8 +10,11 @@ import com.sky.vo.SetmealVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Api(tags = "套餐管理相关接口")
@@ -62,9 +65,18 @@ public class SetmealController {
 
 
     @ApiOperation("起售停售")
-    @PostMapping("/{status}")
+    @PostMapping("/status/{status}")
     public Result statusOrStop(@PathVariable Integer status, Long id) {
+
         setmealService.statusOrStop(status, id);
+        return Result.success();
+    }
+
+
+    @ApiOperation("批量删除")
+    @DeleteMapping
+    public Result deleteList(@RequestParam List<Long> ids) {
+        setmealService.deleteList(ids);
         return Result.success();
     }
 

@@ -3,10 +3,14 @@ package com.sky.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
+import com.sky.constant.StatusConstant;
+import com.sky.context.BaseContext;
 import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
 import com.sky.entity.SetmealDish;
+import com.sky.exception.SetmealEnableFailedException;
+import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
@@ -33,6 +37,8 @@ public class SetmearlServiceImpl implements SetmealService {
     SetmealMapper setmealMapper;
     @Autowired
     SetmealDishMapper setmealDishMapper;
+    @Autowired
+    DishMapper dishMapper;
 
     @Override
     public PageResult page(SetmealPageQueryDTO setmealPageQueryDTO) {
@@ -95,7 +101,33 @@ public class SetmearlServiceImpl implements SetmealService {
 
     @Override
     public void statusOrStop(Integer status, Long id) {
+        List<SetmealDish> bySetmealId = setmealDishMapper.getBySetmealId(id);
+        for (SetmealDish setmealDish : bySetmealId) {
+            Long dishId = setmealDish.getDishId();
+            Integer dishStatus = dishMapper.query(dishId);
+            if (dishStatus == StatusConstant.DISABLE) {
+                throw new SetmealEnableFailedException(MessageConstant.SETMEAL_ENABLE_FAILED);
+            }
+
+        }
         setmealMapper.statusOrStop(status, id);
+
+    }
+
+
+    @Override
+    @Transactional
+    public void deleteList(List<Long> ids) {
+       List<Integer> statusls= setmealMapper.queryStatus(ids);
+        for (Integer status : statusls) {
+            if (status == StatusConstant.ENABLE) {
+                throw new SetmealEnableFailedException(MessageConstant.SETMEAL_ON_SALE);
+            }
+        }
+
+
+       setmealDishMapper.deleteBySetmealIds(ids);
+       setmealMapper.deleteList(ids);
 
     }
 }
