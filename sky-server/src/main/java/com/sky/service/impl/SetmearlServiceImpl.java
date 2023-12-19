@@ -120,8 +120,12 @@ public class SetmearlServiceImpl implements SetmealService {
         }*/
 
         // 方案二
-        Integer dishStatus = dishMapper.query(id);
-
+        List<Integer>  dishStatuss = dishMapper.query(id);
+        for (Integer dishStatus : dishStatuss) {
+            if (dishStatus == StatusConstant.DISABLE) {
+                throw new SetmealEnableFailedException(MessageConstant.SETMEAL_ENABLE_FAILED);
+            }
+        }
 
 
         setmealMapper.statusOrStop(status, id);
