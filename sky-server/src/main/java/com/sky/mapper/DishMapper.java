@@ -38,8 +38,9 @@ public interface DishMapper {
     List<Dish> list(Long categoryId);
 
 
-    @Select("select status from sky_take_out.dish where id = #{dishId}")
-    Integer query(Long dishId);
+    @Select("select d.status from sky_take_out.dish d left join sky_take_out.setmeal_dish s" +
+            " on d.id = s.dish_id where s.setmeal_id = #{setmealId}")
+    Integer query(Long setmealId);
 }
 
 

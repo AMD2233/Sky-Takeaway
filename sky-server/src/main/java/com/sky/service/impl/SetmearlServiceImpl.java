@@ -101,15 +101,29 @@ public class SetmearlServiceImpl implements SetmealService {
 
     @Override
     public void statusOrStop(Integer status, Long id) {
+        /*
+            方案一
         List<SetmealDish> bySetmealId = setmealDishMapper.getBySetmealId(id);
         for (SetmealDish setmealDish : bySetmealId) {
+
+
             Long dishId = setmealDish.getDishId();
             Integer dishStatus = dishMapper.query(dishId);
+
+
+
+
             if (dishStatus == StatusConstant.DISABLE) {
                 throw new SetmealEnableFailedException(MessageConstant.SETMEAL_ENABLE_FAILED);
             }
 
-        }
+        }*/
+
+        // 方案二
+        Integer dishStatus = dishMapper.query(id);
+
+
+
         setmealMapper.statusOrStop(status, id);
 
     }
