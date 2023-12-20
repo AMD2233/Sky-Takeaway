@@ -11,3 +11,8 @@ sky:
     endpoint: oss-cn-beijing.aliyuncs.com
     bucket-name: web-smh
     directory: sky-take-out
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
