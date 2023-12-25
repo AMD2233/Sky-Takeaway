@@ -38,7 +38,7 @@ public class HttpClientUtil {
             }
             URI uri = uriBuilder.build();
 
-            HttpGet httpGet = new HttpGet();
+            HttpGet httpGet = new HttpGet(uri);
 
             response = httpClient.execute(httpGet);
 
